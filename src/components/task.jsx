@@ -13,9 +13,18 @@ const Task = () => {
     if (!inputdata) {
       alert("please add your task");
     } else {
-      setTask([...task, inputdata]);
+      const newInputTask = {
+        id: new Date().getTime().toString(),
+        name: inputdata,
+      };
+      setTask([...task, newInputTask]);
       setinputdata("");
     }
+  };
+
+  // detete task
+  const deleteTask = (id) => {
+    setTask(task.filter((val) => val.id !== id));
   };
   return (
     <div className="main-div">
@@ -40,13 +49,16 @@ const Task = () => {
 
         {/* Show task list */}
         <div className="showItems">
-          {task.map((val, index) => {
+          {task.map((val) => {
             return (
-              <div className="eachItem" key={index}>
-                <h3>{val}</h3>
+              <div className="eachItem" key={val.id}>
+                <h3>{val.name}</h3>
                 <div className="todo-btn"></div>
                 <i className="far fa-edit add-btn"></i>
-                <i className="far fa-trash-alt add-btn"></i>
+                <i
+                  className="far fa-trash-alt add-btn"
+                  onClick={() => deleteTask(val.id)}
+                ></i>
               </div>
             );
           })}
